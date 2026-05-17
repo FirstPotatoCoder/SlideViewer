@@ -1,3 +1,5 @@
+import { navigate } from "./navigation.js";
+
 // ── Slide Remote (WebSocket bridge) ──────────────────
 (function () {
   let ws, retry;
