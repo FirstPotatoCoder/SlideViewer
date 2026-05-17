@@ -3,10 +3,19 @@ import { preloadCache } from "./cache.js";
 import { $, updateUI } from "./ui.js";
 import { _swapPvEl, _swapSvEl, showLastFrame } from "./renderer.js";
 
+// export const fwdPath = (i) =>
+//   `public/slides/${state.DECK}/forward/${i + 1}.mp4`;
+// export const bwdPath = (i) =>
+//   `public/slides/${state.DECK}/backward/${i + 1}.mp4`;
+
+const BASE = window.location.pathname.split("/")[1]
+  ? "/" + window.location.pathname.split("/")[1]
+  : "";
+
 export const fwdPath = (i) =>
-  `public/slides/${state.DECK}/forward/${i + 1}.mp4`;
+  `${BASE}/public/slides/${state.DECK}/forward/${i + 1}.mp4`;
 export const bwdPath = (i) =>
-  `public/slides/${state.DECK}/backward/${i + 1}.mp4`;
+  `${BASE}/public/slides/${state.DECK}/backward/${i + 1}.mp4`;
 
 export function playSlide(i, dir) {
   const cached = preloadCache.get(i);

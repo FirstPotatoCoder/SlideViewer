@@ -1,6 +1,13 @@
 import { initPlayer } from "../main.js";
 
-const MANIFEST_PATH = "public/slides/manifest.json";
+// const MANIFEST_PATH = "public/slides/manifest.json";
+
+const BASE = window.location.pathname.split("/")[1]
+  ? "/" + window.location.pathname.split("/")[1]
+  : "";
+
+const MANIFEST_PATH = `${BASE}/public/slides/manifest.json`;
+
 let manifests = [];
 
 export async function loadGallery() {

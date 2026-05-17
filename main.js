@@ -9,7 +9,7 @@ import { updateUI, $ } from "./js/ui.js";
 
 // Keyboard and controller
 import "./js/keyboard.js";
-import "./js/remote.js";
+// import "./js/remote.js"; // turn-off websocket fofr Github.io
 
 // Navigation
 import { startHold, clearHold, navigate, seekClick } from "./js/navigation.js";
