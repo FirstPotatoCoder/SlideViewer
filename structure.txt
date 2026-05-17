@@ -1,0 +1,17 @@
+project/
+├── index.html
+├── css/
+│   ├── style.css         
+├── js/
+│   ├── gallery.js        ## loadGallery(), onCardVisible(), MANIFEST_PATH, manifests[]
+│   ├── state.js          ## all let/const state vars (DECK, TOTAL, idx, mode, phase, presentIntro, pvEls/svEls, pvFront/svFront)
+│   ├── cache.js          ## preloadCache, makeVid(), warmCache(), LOOK_AHEAD/LOOK_BACK
+│   ├── renderer.js       ## showLastFrame(), showFirstFrame(), _showLastFrameDirect(), _swapPvEl(), _swapSvEl(), _syncPresentToLastFrame()
+│   ├── playback.js       ## playSlide(), onPreviewEnded(), onPresentEnded(), fwdPath, bwdPath
+│   ├── navigation.js     ## navigate(), doNav(), jumpTo(), setPresentIntro(), startHold(), clearHold(), seekClick()
+│   ├── mode.js           ## setMode(), fullscreenchange listener
+│   ├── sidebar.js        ## buildSidebar(), syncSidebar(), thumbObserver
+│   ├── ui.js             ## updateUI(), $() helper
+│   ├── keyboard.js       ## keydown/keyup listeners, keyHeld{}
+│   └── remote.js         ## the WebSocket bridge IIFE at the bottom
+└── main.js               ## initPlayer(), goSetup(), boot call to loadGallery()

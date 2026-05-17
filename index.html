@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slide Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- GALLERY / SETUP -->
+  <div id="setup">
+    <div class="gallery-topbar">
+      <h1>slide<span>.</span>player</h1>
+      <div class="gallery-topbar-meta" id="gallery-meta"></div>
+    </div>
+    <div class="gallery-body">
+      <div class="gallery-section-title">Decks</div>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-state">
+          <div class="icon">⏳</div>
+          Loading manifest…
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">—</div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btn-preview" onclick="setMode('preview')">Preview</button>
+        <button class="mode-btn" id="btn-present" onclick="setMode('present')">Present</button>
+      </div>
+      <div class="playing-dot" id="dot"></div>
+      <div class="slide-counter">Slide <span id="cur-label">1</span> / <span id="tot-label">—</span></div>
+      <div class="key-hints">
+        <span><kbd>← →</kbd> nav</span>
+        <span><kbd>hold</kbd> fast-scan</span>
+        <span><kbd>F</kbd> fullscreen</span>
+      </div>
+      <button class="btn-icon" onclick="goSetup()">↩ Gallery</button>
+    </div>
+
+    <div class="body">
+      <div class="sidebar" id="sidebar"></div>
+      <div class="preview-main">
+        <div class="stage" id="preview-stage">
+          <video id="pv0" class="front" playsinline webkit-playsinline></video>
+          <video id="pv1" class="back"  playsinline webkit-playsinline></video>
+          <div class="back-badge" id="back-badge">← back</div>
+        </div>
+        <div class="progress-row">
+          <div class="prog-track" id="prog-track" onclick="seekClick(event)">
+            <div class="prog-fill" id="prog-fill"></div>
+          </div>
+          <div class="prog-label" id="prog-label">1 / —</div>
+        </div>
+        <div class="nav-row">
+          <button class="nav-btn" id="btn-prev"
+            onclick="navigate(-1)"
+            onmousedown="startHold(-1)" onmouseup="clearHold()" onmouseleave="clearHold()"
+            ontouchstart="navigate(-1);startHold(-1)" ontouchend="clearHold()">← Prev</button>
+          <button class="nav-btn cta" id="btn-next"
+            onclick="navigate(1)"
+            onmousedown="startHold(1)" onmouseup="clearHold()" onmouseleave="clearHold()"
+            ontouchstart="navigate(1);startHold(1)" ontouchend="clearHold()">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESENT OVERLAY -->
+  <div id="present-overlay">
+    <div class="stage" id="present-stage">
+      <video id="sv0" class="front" playsinline webkit-playsinline></video>
+      <video id="sv1" class="back"  playsinline webkit-playsinline></video>
+    </div>
+    <div class="present-intro-badge hidden" id="present-intro-badge">▶ NEXT TO PLAY ANIMATION</div>
+    <div class="present-hud">
+      <div class="hud-ctr" id="hud-ctr">1 / —</div>
+      <button class="hud-btn" id="hud-prev"
+        onclick="navigate(-1)"
+        onmousedown="startHold(-1)" onmouseup="clearHold()" onmouseleave="clearHold()">← Prev</button>
+      <button class="hud-btn" id="hud-next"
+        onclick="navigate(1)"
+        onmousedown="startHold(1)" onmouseup="clearHold()" onmouseleave="clearHold()">Next →</button>
+      <button class="hud-btn hud-exit" onclick="setMode('preview')">✕ Exit</button>
+    </div>
+  </div>
+
+  <!-- SCRIPTS: order matters -->
+  <script src="js/state.js"></script>
+  <script src="js/cache.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/playback.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/mode.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/remote.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>
