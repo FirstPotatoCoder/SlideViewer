@@ -1,9 +1,15 @@
+import { state } from "./state.js";
+import { preloadCache } from "./cache.js";
+import { fwdPath } from "./playback.js";
+import { $ } from "./ui.js";
+import { jumpTo } from "./navigation.js";
+
 // ═══════════════════════════════════════════════════════
 //  SIDEBAR
 // ═══════════════════════════════════════════════════════
 let thumbObserver = null;
 
-function buildSidebar() {
+export function buildSidebar() {
   const sb = $("sidebar");
   sb.innerHTML = "";
 
@@ -53,7 +59,7 @@ function buildSidebar() {
     { root: sb, rootMargin: "80px" },
   );
 
-  for (let i = 0; i < TOTAL; i++) {
+  for (let i = 0; i < state.TOTAL; i++) {
     const item = document.createElement("div");
     item.className = "thumb-item unloaded" + (i === 0 ? " active" : "");
     item.dataset.i = i;
@@ -75,11 +81,11 @@ function buildSidebar() {
   }
 }
 
-function syncSidebar() {
+export function syncSidebar() {
   $("sidebar")
     .querySelectorAll(".thumb-item")
     .forEach((el) => {
-      el.classList.toggle("active", +el.dataset.i === idx);
+      el.classList.toggle("active", +el.dataset.i === state.idx);
     });
   const active = $("sidebar").querySelector(".thumb-item.active");
   if (active) active.scrollIntoView({ block: "nearest", behavior: "smooth" });

@@ -1,8 +1,11 @@
-const LOOK_AHEAD = 3;
-const LOOK_BACK = 1;
-const preloadCache = new Map();
+import { state } from "./state.js";
+import { fwdPath, bwdPath } from "./playback.js";
 
-function makeVid(src) {
+export const LOOK_AHEAD = 3;
+export const LOOK_BACK = 1;
+export const preloadCache = new Map();
+
+export function makeVid(src) {
   const v = document.createElement("video");
   v.setAttribute("playsinline", "");
   v.setAttribute("webkit-playsinline", "");
@@ -13,9 +16,9 @@ function makeVid(src) {
   return v;
 }
 
-function warmCache(center) {
+export function warmCache(center) {
   const lo = Math.max(0, center - LOOK_BACK);
-  const hi = Math.min(TOTAL - 1, center + LOOK_AHEAD);
+  const hi = Math.min(state.TOTAL - 1, center + LOOK_AHEAD);
   const keep = new Set();
 
   for (let i = lo; i <= hi; i++) {

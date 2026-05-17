@@ -1,7 +1,9 @@
+import { initPlayer } from "../main.js";
+
 const MANIFEST_PATH = "public/slides/manifest.json";
 let manifests = [];
 
-async function loadGallery() {
+export async function loadGallery() {
   const grid = document.getElementById("gallery-grid");
   try {
     const res = await fetch(MANIFEST_PATH);
@@ -14,7 +16,7 @@ async function loadGallery() {
         <div>Could not load <code>${MANIFEST_PATH}</code></div>
         <div style="color:var(--muted);font-size:.7rem;line-height:1.8">
           Create a JSON file at that path:<br>
-          <code>[ { "name": "Colonialism", "slides": 91 } ]</code>
+          <code>[ { "name": "deckName", "slides": 69 } ]</code>
         </div>
       </div>`;
     return;

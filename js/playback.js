@@ -1,7 +1,14 @@
-const fwdPath = (i) => `public/slides/${DECK}/forward/${i + 1}.mp4`;
-const bwdPath = (i) => `public/slides/${DECK}/backward/${i + 1}.mp4`;
+import { state, svF } from "./state.js";
+import { preloadCache } from "./cache.js";
+import { $, updateUI } from "./ui.js";
+import { _swapPvEl, _swapSvEl, showLastFrame } from "./renderer.js";
 
-function playSlide(i, dir) {
+export const fwdPath = (i) =>
+  `public/slides/${state.DECK}/forward/${i + 1}.mp4`;
+export const bwdPath = (i) =>
+  `public/slides/${state.DECK}/backward/${i + 1}.mp4`;
+
+export function playSlide(i, dir) {
   const cached = preloadCache.get(i);
   const src = cached
     ? dir === "backward"
@@ -11,11 +18,11 @@ function playSlide(i, dir) {
       ? bwdPath(i)
       : fwdPath(i);
 
-  phase = dir;
+  state.phase = dir;
   $("dot").classList.add("on");
   $("back-badge").classList.toggle("show", dir === "backward");
 
-  if (mode === "present") {
+  if (state.mode === "present") {
     // Drive present stage; preview stage gets silently loaded too (stays in bg)
     _swapSvEl(src, 0, true, onPresentEnded);
     // Keep preview quietly loaded (won't autoplay)
@@ -27,15 +34,15 @@ function playSlide(i, dir) {
 }
 
 function onPreviewEnded() {
-  phase = "idle";
+  state.phase = "idle";
   $("dot").classList.remove("on");
   $("back-badge").classList.remove("show");
-  showLastFrame(idx);
+  showLastFrame(state.idx);
   updateUI();
 }
 
 function onPresentEnded() {
-  phase = "idle";
+  state.phase = "idle";
   $("dot").classList.remove("on");
   $("back-badge").classList.remove("show");
   // Seek present stage video to last frame in place (no buffer swap needed)
@@ -44,6 +51,6 @@ function onPresentEnded() {
     sv.currentTime = Math.max(0, sv.duration - 0.01);
   }
   // Keep preview in sync too
-  showLastFrame(idx);
+  showLastFrame(state.idx);
   updateUI();
 }

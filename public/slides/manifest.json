@@ -1,8 +1,5 @@
 [
   { "name": "MoralTheories", "slides": 50 },
-  { "name": "First", "slides": 23 },
-  { "name": "Second", "slides": 15 },
-  { "name": "Third", "slides": 14 },
   { "name": "Lesson_II",    "slides": 110 },
   { "name": "Lesson_I", "slides": 91 }
 ]

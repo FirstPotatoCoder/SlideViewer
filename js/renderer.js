@@ -1,8 +1,11 @@
+import { preloadCache } from "./cache.js";
+import { pvF, pvB, svF, svB, state } from "./state.js";
+
 // ═══════════════════════════════════════════════════════
 //  showFirstFrame — load frame 0 of slide i into the
 //  present stage only (preview stage stays as-is).
 // ═══════════════════════════════════════════════════════
-function showFirstFrame(i) {
+export function showFirstFrame(i) {
   const cached = preloadCache.get(i);
   const src = cached ? cached.fwd.src : fwdPath(i);
   _swapSvEl(src, 0, false, null);
@@ -12,7 +15,7 @@ function showFirstFrame(i) {
 //  showLastFrame — seek forward video to its last frame
 //  and display in preview (and present if not in present mode)
 // ═══════════════════════════════════════════════════════
-function showLastFrame(i) {
+export function showLastFrame(i) {
   const cached = preloadCache.get(i);
   if (!cached) {
     _showLastFrameDirect(fwdPath(i));
@@ -42,7 +45,7 @@ function showLastFrame(i) {
   }
 }
 
-function _showLastFrameDirect(path) {
+export function _showLastFrameDirect(path) {
   const bv = pvB();
   bv.oncanplay = null;
   bv.onloadedmetadata = null;
@@ -67,7 +70,7 @@ function _showLastFrameDirect(path) {
 // ═══════════════════════════════════════════════════════
 //  _swapPvEl — swap preview buffer
 // ═══════════════════════════════════════════════════════
-function _swapPvEl(src, time, autoplay, onEndedCb) {
+export function _swapPvEl(src, time, autoplay, onEndedCb) {
   const fv = pvF();
   const bv = pvB();
   fv.onended = null;
@@ -77,7 +80,7 @@ function _swapPvEl(src, time, autoplay, onEndedCb) {
     bv.oncanplay = null;
     bv.className = "front fadein";
     fv.className = "back";
-    pvFront = 1 - pvFront;
+    state.pvFront = 1 - state.pvFront;
     bv.addEventListener("animationend", () => bv.classList.remove("fadein"), {
       once: true,
     });
@@ -99,7 +102,7 @@ function _swapPvEl(src, time, autoplay, onEndedCb) {
 // ═══════════════════════════════════════════════════════
 //  _swapSvEl — swap present buffer
 // ═══════════════════════════════════════════════════════
-function _swapSvEl(src, time, autoplay, onEndedCb) {
+export function _swapSvEl(src, time, autoplay, onEndedCb) {
   const fv = svF();
   const bv = svB();
   fv.onended = null;
@@ -109,7 +112,7 @@ function _swapSvEl(src, time, autoplay, onEndedCb) {
     bv.oncanplay = null;
     bv.className = "front fadein";
     fv.className = "back";
-    svFront = 1 - svFront;
+    state.svFront = 1 - state.svFront;
     bv.addEventListener("animationend", () => bv.classList.remove("fadein"), {
       once: true,
     });
@@ -129,7 +132,7 @@ function _swapSvEl(src, time, autoplay, onEndedCb) {
 }
 
 // Helper: seek present stage to last frame of slide i
-function _syncPresentToLastFrame(i) {
+export function _syncPresentToLastFrame(i) {
   const cached = preloadCache.get(i);
   const src = cached ? cached.fwd.src : fwdPath(i);
   // We need duration — load into a temp element if not cached

@@ -1,4 +1,10 @@
+import { $ } from "./ui.js";
+import { navigate, startHold, clearHold } from "./navigation.js";
+import { setMode } from "./mode.js";
+import { state } from "./state.js";
+
 const keyHeld = {};
+
 document.addEventListener("keydown", (e) => {
   if ($("setup").style.display !== "none") return;
   if (["INPUT", "TEXTAREA"].includes(e.target.tagName)) return;
@@ -21,10 +27,10 @@ document.addEventListener("keydown", (e) => {
       break;
     case "f":
     case "F":
-      setMode(mode === "present" ? "preview" : "present");
+      setMode(state.mode === "present" ? "preview" : "present");
       break;
     case "Escape":
-      if (mode === "present") setMode("preview");
+      if (state.mode === "present") setMode("preview");
       break;
   }
 });
